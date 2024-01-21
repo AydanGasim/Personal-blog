@@ -4,6 +4,7 @@ use App\Http\Controllers\blogController\blogController;
 use App\Http\Controllers\generalController\routeController;
 use App\Http\Controllers\loginController\loginController;
 use App\Http\Controllers\messageController\messageController;
+use App\Http\Controllers\portfolioController\portfolioController;
 use App\Http\Controllers\services\serviceController;
 use App\Http\Controllers\settings\aboutController;
 use App\Http\Controllers\settings\contactController;
@@ -63,6 +64,27 @@ Route::middleware([isLogout::class])->group(function () {
 
 
         });
+    });
+    Route::prefix('portfolio')->group(function () {
+        Route::controller(portfolioController::class)->group(function () {
+            Route::get('/portfolio-category', 'categoryList')->name('portfolioCategoryList');
+            Route::get('/portfolio-category-add', 'addCategory')->name('portfolioCategoryAdd');
+            Route::post('/portfolio-category-add-post', 'addCategoryPost')->name('portfolioCategoryAddPost');
+            Route::get('/portfolio-category-delete/{id}', 'categoryDelete')->name('portfolioCategoryDelete');
+            Route::post('/portfolio-category-edit', 'categoryEditPost')->name("portfolioCategoryEditPost");
+            Route::get('/portfolio-list', 'portfolioList')->name('portfolioList');
+            Route::get('/portfolio-add', 'addPortfolio')->name('portfolioAdd');
+            Route::post('/portfolio-add', 'addPortfolioPost')->name('portfolioAddPost');
+            Route::get('/portfolio-delete/{id}', 'portfolioDelete')->name('portfolioDelete');
+            Route::get('/portfolio-edit/{id}', 'portfolioEditView')->name('portfolioEditView');
+            Route::post('/portfolio-edit/{id}', 'portfolioEditPost')->name('portfolioEditPost');
+
+            //ajax
+            Route::post('/portfolio-category-view', 'categoryView');
+            Route::post('/portfolio-view', 'portfolioView');
+
+
+        });
 
     });
     Route::prefix('services')->group(function () {
@@ -100,3 +122,4 @@ Route::middleware([isLogin::class])->group(function () {
     });
 
 });
+

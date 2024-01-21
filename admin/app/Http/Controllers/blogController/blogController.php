@@ -32,12 +32,20 @@ class blogController extends Controller
     public function addCategoryPost(Request $request){
         $request->validate([
             'title' => 'required|max:500',
-
+            'image' => 'required|mimes:png,jpg,jpeg,gif|max:1024',
         ]);
+        $image = $request->file('image');
+        $directory = 'uploads/categories/';
+        $image_name =  Str::slug($request->title)."-".rand(10000, 99999)  . "." . $image->getClientOriginalExtension();
+        $image->move($directory, $image_name);
+
+
+
 
         $ins = DB::table('category')->insert([
             'title'=>$request->title,
             'slug'=>Str::slug($request->name),
+            'image'=>'uploads/categories/'.$image_name,
             'created_at'=>now(),
             'updated_at'=>now(),
         ]);
@@ -49,8 +57,6 @@ class blogController extends Controller
         $categoryData = DB::table('category')->find($id);
 
         if ($categoryData) {
-
-
             return redirect()->back()->with('success', DB::table('category')->where('id', $id)->delete());
         }
     }
@@ -60,7 +66,19 @@ class blogController extends Controller
         $request->validate([
             'title' => 'required|max:150',
             'status' => 'required',
+            'image' => 'nullable|mimes:png,jpg,jpeg,gif|max:2048',
         ]);
+        $image_name=$request->old_image;
+        if($request->hasFile('image')){
+            $image = $request->file('image');
+            $directory = 'uploads/categories/';
+            if(file_exists($image_name)){
+                unlink($image_name);
+            }
+            $image_name =  Str::slug($request->title)."-".rand(10000, 99999)  . "." . $image->getClientOriginalExtension();
+            $image->move($directory, $image_name);
+            $image_name=$directory.$image_name;
+        }
 
         $add = DB::table('category')
             ->where('id', $request->id)
@@ -68,7 +86,7 @@ class blogController extends Controller
                 'title'=>$request->title,
                 'slug'=>Str::slug($request->title),
                 'status'=>$request->status,
-                'created_at'=> now(),
+                'image'=>$image_name,
                 'updated_at'=> now(),
             ]);
         return redirect()->back()->with($add ? 'success' : 'error',true);

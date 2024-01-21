@@ -33,6 +33,7 @@ const editCategory = async (id) => {
                 document.getElementById("title").value= data.category.title;
                 document.getElementById("id").value= data.category.id;
                 document.getElementById("status").value= data.category.status;
+                document.getElementById("old_image").value= data.category.image;
 
 
                 myModal.show();

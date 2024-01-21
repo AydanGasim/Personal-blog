@@ -12,6 +12,7 @@
                     <tr>
                         <th>ID</th>
                         <th>Name</th>
+                        <th>Image</th>
                         <th>Status</th>
                         <th>Operations</th>
                     </tr>
@@ -21,6 +22,7 @@
                         <tr>
                             <td>{{ $category->id }}</td>
                             <td>{{ $category->title }}</td>
+                            <td><img style="width: 64px; height: 32px" src="{{ asset($category->image) }}" alt="#"  /></td>
                             <td>{!! \App\Http\Controllers\generalController\helperController::getStatus($category->status) !!}</td>
                             <td>
                                 <button onclick="editCategory({{$category->id}})" class="btn btn-outline-warning btn-sm">Edit</button>
@@ -42,7 +44,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form method="POST" action="{{ route('categoryEditPost') }}">
+                    <form method="POST" action="{{ route('categoryEditPost') }}" enctype="multipart/form-data">
                         <input type="hidden" name="id" id="id" />
                         @csrf
                         <div class="mb-3">
@@ -56,6 +58,12 @@
                                 <option value="0">Deactivated</option>
                             </select>
                         </div>
+                        <input type="hidden"  id="old_image" name="old_image"/>
+                        <div class="mb-3">
+                            <label for="image" class="col-form-label">Image:</label>
+                            <input type="file" class="form-control"  name="image" id="image">
+                        </div>
+
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             <button type="submit" class="btn btn-primary">Edit</button>

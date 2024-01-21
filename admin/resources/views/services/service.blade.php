@@ -85,7 +85,7 @@
                         <input type="hidden"  id="old_image" name="old_image"/>
                         <div class="mb-3">
                             <label for="image" class="col-form-label">Image:</label>
-                            <input type="file" class="form-control"  name="image" id="description">
+                            <input type="file" class="form-control"  name="image" id="image">
                         </div>
                         <div class="mb-3">
                             <label  class="col-form-label">Current Image:</label>

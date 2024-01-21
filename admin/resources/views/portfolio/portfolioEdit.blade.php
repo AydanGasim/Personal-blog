@@ -1,0 +1,163 @@
+@extends('layouts.master')
+@section('title', 'Blog Edit')
+@section('content')
+    <!-- Content -->
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <!-- DataTable with Buttons -->
+        <div class="row mt-2 mb-2">
+            <div class="col-md-6 mx-auto">
+                <div class="card mb-4">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Blog Edit Panel</h5>
+                    </div>
+                    <div class="card-body">
+                        @include('widgets.errors')
+                        <form method="POST" action="{{ route('portfolioEditPost',$portfolio->id) }}" enctype="multipart/form-data">
+                            <input type="hidden" name="old_image" value="{{ $portfolio->image }}" />
+                            @csrf
+                            <div class="mb-3">
+                                <label class="form-label" for="status">Status</label>
+                                <select name="status" id="status" class="form-control">
+                                    <option value="1" {{ $portfolio->status=== "1" ? 'selected="selected"' : '' }}>Active</option>
+                                    <option value="0" {{ $portfolio->status=== "0" ? 'selected="selected"' : '' }}>Deactivated</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="image">Current Image:</label> <br />
+                                <img src="{{ asset($portfolio->image) }}" style="height: 150px; width: auto" />
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="image">Image:</label>
+                                <input type="file" class="form-control" name="image" id="image" />
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="category">Category:</label>
+                                <select name="category" id="category" class="form-control">
+                                    @foreach($categories as $category)
+                                        <option value="{{ $category->id }}" {{ $portfolio->category_id=== $category->id ? 'selected="selected"' : '' }}>{{ $category->title }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="title">Title:</label>
+                                <input type="text" class="form-control" value="{{ $portfolio->title }}" name="title" id="title" placeholder="AI Programming" />
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="description">Description:</label>
+                                <input type="text" class="form-control" value="{{ $portfolio->description }}" name="description" id="description" />
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="text_content">Content:</label>
+                                <textarea name="text_content" id="text_content" class="">{{ $portfolio->text_content }}</textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Edit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- / Content -->
+
+@endsection
+@section('css')
+
+@endsection
+@section("js")
+    <script src="https://cdn.tiny.cloud/1/52smw0o2h97zsjkxxhauw3bmw9uix36db2u92evy5bxdrqmd/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+        var useDarkMode = window.matchMedia('(prefers-color-scheme: white)').matches;
+        tinymce.init({
+            selector: 'textarea',
+            plugins: 'print preview paste importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern noneditable help charmap quickbars emoticons',
+            imagetools_cors_hosts: ['picsum.photos'],
+            menubar: 'file edit view insert format tools table help',
+            toolbar: 'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent | numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | fullscreen preview save print | insertfile image media template link anchor codesample | ltr rtl',
+            toolbar_sticky: true,
+            autosave_ask_before_unload: true,
+            autosave_interval: '30s',
+            autosave_prefix: '{path}{query}-{id}-',
+            autosave_restore_when_empty: false,
+            autosave_retention: '2m',
+            image_advtab: true,
+            link_list: [{
+                title: 'My page 1',
+                value: 'https://www.tiny.cloud'
+            },
+                {
+                    title: 'My page 2',
+                    value: 'http://www.moxiecode.com'
+                }
+            ],
+            image_list: [{
+                title: 'My page 1',
+                value: 'https://www.tiny.cloud'
+            },
+                {
+                    title: 'My page 2',
+                    value: 'http://www.moxiecode.com'
+                }
+            ],
+            image_class_list: [{
+                title: 'None',
+                value: ''
+            },
+                {
+                    title: 'Some class',
+                    value: 'class-name'
+                }
+            ],
+            importcss_append: true,
+            file_picker_callback: function(callback, value, meta) {
+                /* Provide file and text for the link dialog */
+                if (meta.filetype === 'file') {
+                    callback('https://www.google.com/logos/google.jpg', {
+                        text: 'My text'
+                    });
+                }
+
+                /* Provide image and alt text for the image dialog */
+                if (meta.filetype === 'image') {
+                    callback('https://www.google.com/logos/google.jpg', {
+                        alt: 'My alt text'
+                    });
+                }
+
+                /* Provide alternative source and posted for the media dialog */
+                if (meta.filetype === 'media') {
+                    callback('movie.mp4', {
+                        source2: 'alt.ogg',
+                        poster: 'https://www.google.com/logos/google.jpg'
+                    });
+                }
+            },
+            templates: [{
+                title: 'New Table',
+                description: 'creates a new table',
+                content: '<div class="mceTmpl"><table width="98%%" border="0" cellspacing="0" cellpadding="0"><tr><th scope="col"> </th><th scope="col"> </th></tr><tr><td> </td><td> </td></tr></table></div>'
+            },
+                {
+                    title: 'Starting my story',
+                    description: 'A cure for writers block',
+                    content: 'Once upon a time...'
+                },
+                {
+                    title: 'New list with dates',
+                    description: 'New List with dates',
+                    content: '<div class="mceTmpl"><span class="cdate">cdate</span><br /><span class="mdate">mdate</span><h2>My List</h2><ul><li></li><li></li></ul></div>'
+                }
+            ],
+            template_cdate_format: '[Date Created (CDATE): %m/%d/%Y : %H:%M:%S]',
+            template_mdate_format: '[Date Modified (MDATE): %m/%d/%Y : %H:%M:%S]',
+            height: 600,
+            image_caption: true,
+            quickbars_selection_toolbar: 'bold italic | quicklink h2 h3 blockquote quickimage quicktable',
+            noneditable_noneditable_class: 'mceNonEditable',
+            toolbar_mode: 'sliding',
+            contextmenu: 'link image imagetools table',
+            skin: useDarkMode ? 'oxide-dark' : 'oxide',
+            content_css: useDarkMode ? 'dark' : 'default',
+            content_style: 'body { font-family:Arial,Helvetica,sans-serif; font-size:14px }'
+        });
+    </script>
+@endsection

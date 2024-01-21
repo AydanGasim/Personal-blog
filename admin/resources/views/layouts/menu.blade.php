@@ -2,7 +2,7 @@
     <div class="app-brand demo">
         <a href="index.html" class="app-brand-link">
 
-                <img src="{{asset('uploads/siteInfo/logo.png')}}" style="width: 135px !important" alt="" />
+                <img src="{{asset('uploads/siteInfo/logo.png')}}" style="width: 135px !important; height: auto; object-fit: cover !important;" alt="" />
 
         </a>
 
@@ -81,6 +81,40 @@
                     <a href="{{route('blogAdd')}}" class="menu-link">
                         <i class="menu-icon tf-icons ti ti-users"></i>
                         <div data-i18n="Add Blog">Add Blog</div>
+                    </a>
+                </li>
+
+
+            </ul>
+
+        <li class="menu-item {{ Request::segment(1)== "portfolio"? 'active open' : ''}}">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons ti ti-briefcase"></i>
+                <div data-i18n="Portfolio">Portfolio</div>
+            </a>
+            <ul class="menu-sub">
+                <li class="menu-item {{ Request::segment(1)== "portfolio" && Request::segment(2)== "portfolio-category"? 'active' : ''}}">
+                    <a href="{{route('portfolioCategoryList')}}" class="menu-link">
+                        <i class="menu-icon tf-icons ti ti-users"></i>
+                        <div data-i18n="Category List">Category list</div>
+                    </a>
+                </li>
+                <li class="menu-item {{ Request::segment(1)== "portfolio" && Request::segment(2)== "portfolio-category-add"? 'active' : ''}}">
+                    <a href="{{route('portfolioCategoryAdd')}}" class="menu-link">
+                        <i class="menu-icon tf-icons ti ti-users"></i>
+                        <div data-i18n="Add Category">Add Category</div>
+                    </a>
+                </li>
+                <li class="menu-item {{ Request::segment(1)== "portfolio" && Request::segment(2)== "portfolio-list"? 'active' : ''}}">
+                    <a href="{{route('portfolioList')}}" class="menu-link">
+                        <i class="menu-icon tf-icons ti ti-users"></i>
+                        <div data-i18n="Portfolio List">Portfolio list</div>
+                    </a>
+                </li>
+                <li class="menu-item {{ Request::segment(1)== "portfolio" && Request::segment(2)== "portfolio-add"? 'active' : ''}}">
+                    <a href="{{route('portfolioAdd')}}" class="menu-link">
+                        <i class="menu-icon tf-icons ti ti-users"></i>
+                        <div data-i18n="Add Portfolio">Add Portfolio</div>
                     </a>
                 </li>
 

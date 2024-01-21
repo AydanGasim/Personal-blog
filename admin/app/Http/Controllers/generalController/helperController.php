@@ -45,4 +45,9 @@ class helperController extends Controller
         return $category ? $category->title : '--';
     }
 
+    public static function getPortfolioCategoryName($id){
+        $category =  DB::table('portfolio_category')->where('id',$id)->first();
+        return $category ? $category->title : '--';
+    }
+
 }

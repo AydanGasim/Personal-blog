@@ -13,16 +13,14 @@
 
                     <form method="POST" action="{{ route("categoryAddPost") }}" enctype="multipart/form-data">
                         @csrf
-{{--                        <div class="mb-3">--}}
-{{--                            <label class="form-label" for="category">Category</label>--}}
-{{--                            <select name="category" id="category" class="form-control">--}}
-{{--                                <option value="1">Biznes</option>--}}
-{{--                                <option value="2">Texnologiya</option>--}}
-{{--                            </select>--}}
-{{--                        </div>--}}
+
                         <div class="mb-3">
                             <label class="form-label" for="title">Name</label>
                             <input type="text" class="form-control" name="title" id="title" placeholder="AI Programming">
+                        </div>
+                        <div>
+                            <label class="form-label" for="image">Image</label>
+                            <input type="file" class="form-control" name="image" id="image">
                         </div>
 
                         <button type="submit" class="btn btn-primary waves-effect waves-light">Add</button>

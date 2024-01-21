@@ -21,7 +21,7 @@ class aboutController extends Controller
         $request->validate([
             'about_title' => 'required|max:500',
             'about_content' => 'required',
-            'image' => 'nullable|mimes:png,jpg,jpeg,gif|max:1024',
+            'image' => 'nullable|mimes:png,jpg,jpeg,gif|max:2048',
         ]);
         $image_name = $request->old_image;
         if($request->hasFile('image')){
