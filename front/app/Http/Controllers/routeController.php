@@ -29,8 +29,11 @@ class routeController extends Controller
             ])
             ->select('blog.*', 'category.slug AS category_slug','category.title AS category_title',)
             ->get();
-        return view('index',compact('blogs'));
+        $posts = DB::table('instagram')->get();
+        return view('index',compact('blogs','posts'));
     }
+
+
     public function aboutPage()
     {
         return view('about');

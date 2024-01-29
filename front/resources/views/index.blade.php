@@ -345,4 +345,6 @@
         <!-- Start Back To Top  -->
         <a id="backto-top"></a>
         <!-- End Back To Top  -->
+
+        @include('components.instagram')
 @endsection
